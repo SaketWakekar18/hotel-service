@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +22,6 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public Hotels createHotel(Hotels hotels) {
-        String randomID = UUID.randomUUID().toString();
-        hotels.setHotelId(randomID);
         if (!this.hotelRepository.existsByName(hotels.getName()) || !this.hotelRepository.existsByLocation(hotels.getLocation())) {
             Hotels createHotel = this.hotelRepository.save(hotels);
             return createHotel;
@@ -34,7 +31,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public Hotels updateHotel(Hotels hotels, String hotelId) {
+    public Hotels updateHotel(Hotels hotels, int hotelId) {
         Hotels getHotels = this.hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel not found with ID: " + hotelId));
         getHotels.setName(hotels.getName());
         getHotels.setLocation(hotels.getLocation());
@@ -50,12 +47,12 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public Hotels getHotelByID(String hotelId) {
+    public Hotels getHotelByID(int hotelId) {
         return this.hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel not found with ID: " + hotelId));
     }
 
     @Override
-    public void deleteHotel(String hotelId) {
+    public void deleteHotel(int hotelId) {
         Hotels hotels = this.hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel not found with ID: " + hotelId));
         this.hotelRepository.delete(hotels);
     }
@@ -72,5 +69,11 @@ public class HotelServiceImpl implements HotelService {
         hotelResponse.setTotalElements(hotelsPage.getTotalElements());
         hotelResponse.setLastPage(hotelsPage.isLast());
         return hotelResponse;
+    }
+
+    @Override
+    public Hotels searchHotel(String name) {
+        Hotels searchHotel = this.hotelRepository.findByName(name);
+        return searchHotel;
     }
 }

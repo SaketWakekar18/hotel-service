@@ -26,7 +26,7 @@ public class HotelController {
     }
 
     @PutMapping("/update/{hotelId}")
-    public ResponseEntity<Hotels> updateHotel(@Valid @RequestBody Hotels hotels, @PathVariable String hotelId) {
+    public ResponseEntity<Hotels> updateHotel(@Valid @RequestBody Hotels hotels, @PathVariable int hotelId) {
         Hotels updatedHotel = this.hotelService.updateHotel(hotels, hotelId);
         return ResponseEntity.ok(updatedHotel);
     }
@@ -38,13 +38,13 @@ public class HotelController {
     }
 
     @GetMapping("/getHotelsByID/{hotelId}")
-    public ResponseEntity<Hotels> getHotelsByID(@PathVariable String hotelId) {
+    public ResponseEntity<Hotels> getHotelsByID(@PathVariable int hotelId) {
         Hotels hotelByID = this.hotelService.getHotelByID(hotelId);
         return ResponseEntity.ok(hotelByID);
     }
 
     @DeleteMapping("/delete/{hotelId}")
-    public ResponseEntity<APIResponse> deleteHotel(@PathVariable String hotelId) {
+    public ResponseEntity<APIResponse> deleteHotel(@PathVariable int hotelId) {
         this.hotelService.deleteHotel(hotelId);
         return new ResponseEntity<>(new APIResponse("Hotel deleted successfully!", true), HttpStatus.GONE);
     }
@@ -53,5 +53,11 @@ public class HotelController {
                                                                                    @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
                                                                                    @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy) {
         return ResponseEntity.ok(this.hotelService.getAllHotelsWithPaginationAndSorting(pageNumber, pageSize, sortBy));
+    }
+
+    @GetMapping("/searchHotel")
+    public ResponseEntity<Hotels> searchHotels(@RequestParam String name){
+        Hotels hotels = this.hotelService.searchHotel(name);
+        return ResponseEntity.ok(hotels);
     }
 }

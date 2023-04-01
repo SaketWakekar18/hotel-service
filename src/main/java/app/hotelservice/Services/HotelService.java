@@ -9,13 +9,14 @@ public interface HotelService {
 
     Hotels createHotel(Hotels hotels);
 
-    Hotels updateHotel(Hotels hotels, String hotelId);
+    Hotels updateHotel(Hotels hotels, int hotelId);
 
     List<Hotels> getAllHotels();
 
-    Hotels getHotelByID(String hotelId);
+    Hotels getHotelByID(int hotelId);
 
-    void deleteHotel(String hotelId);
+    void deleteHotel(int hotelId);
 
     HotelResponse getAllHotelsWithPaginationAndSorting(int pageNumber, int pageSize, String sortBy);
+    Hotels searchHotel(String name);
 }
