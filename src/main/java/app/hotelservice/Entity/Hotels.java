@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -17,7 +19,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class Hotels {
     @Id
-    private String hotelId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int hotelId;
     @NotEmpty(message = "Hotel Name cannot be empty")
     private String name;
     @NotEmpty(message = "Hotel location cannot be empty")
