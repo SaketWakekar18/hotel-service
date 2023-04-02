@@ -10,5 +10,4 @@ public interface HotelRepository extends JpaRepository<Hotels,Integer> {
     boolean existsByLocation(String location);
     Hotels findByName(String name);
 
-
 }

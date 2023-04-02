@@ -1,6 +1,8 @@
 server:
   port: 8081
 spring:
+  application:
+    name: hotel-service
   datasource:
     url: jdbc:mysql://localhost:3306/hotel_service_microservices
     username: root
@@ -14,3 +16,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-client: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8083/eureka
